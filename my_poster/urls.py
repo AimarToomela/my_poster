@@ -15,7 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from renderer.views import favorite, top
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('favorite/', favorite, name='favorite'),
+    path('top/<size>/',top, name='top'),
 ]

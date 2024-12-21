@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favorite Poster</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        img {
+            width: 400px;
+            height: 600px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    {% if poster %}
+        <img src="{{ poster.url }}" alt="Favorite Poster">
+    {% else %}
+        <p>No poster found.</p>
+    {% endif %}
+</body>
+</html>
