@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Top Posters</title>
+    <title>{{ poster.name }}</title>
     <style>
         body {
             display: flex;
             flex-direction: column;
+            justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
@@ -16,24 +17,17 @@
             width: 400px;
             height: 600px;
             object-fit: cover;
-            margin: 10px 0;
+            margin-bottom: 20px;
         }
-        .error {
-            color: red;
+        h1, h2, p {
+            text-align: center;
         }
     </style>
 </head>
 <body>
-    {% if error %}
-        <p class="error">{{ error }}</p>
-    {% else %}
-        {% for poster in posters %}
-            <a href="{% url 'poster_details' poster.id %}">
-                <img src="{{ poster.url }}" alt="Poster">
-            </a>
-        {% empty %}
-            <p>No posters found.</p>
-        {% endfor %}
-    {% endif %}
+    <img src="{{ poster.url }}" alt="Poster Image">
+    <h1>{{ poster.name }}</h1>
+    <h2>Directed by: {{ poster.director_name }}</h2>
+    <p>{{ poster.description }}</p>
 </body>
 </html>

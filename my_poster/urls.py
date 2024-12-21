@@ -16,9 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from renderer.views import favorite, top
+from details.views import poster_details
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('favorite/', favorite, name='favorite'),
-    path('top/<size>/',top, name='top'),
+    path('top/', top, name='top'),
+    path('top/<int:size>/', top, name='top-size'),
+    path('poster_details/<int:id>/', poster_details, name='poster_details'),
 ]
