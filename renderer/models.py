@@ -8,4 +8,10 @@ class Poster(models.Model):
     director_name = models.CharField(max_length=256, default = "No director name available")
 
     def __str__(self):
-        return self.url
+        return self.name
+
+class Favorite(models.Model):
+    poster = models.ForeignKey(Poster, on_delete=models.CASCADE, related_name='favorites')
+
+    def __str__(self):
+        return f"Favorite: {self.poster.name}"

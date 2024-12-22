@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Poster
+from .models import Poster, Favorite
 
 # Create your views here.
 def favorite(request):
@@ -16,3 +16,11 @@ def top(request, size=None):
     else:
         posters = Poster.objects.all().order_by('-id')[:5]
     return render(request, 'top.html', {'posters': posters})
+
+def favorites(request):
+    favorite_posters = Poster.objects.filter(id__in=Favorite.objects.values('poster_id'))
+    if not favorite_posters.exists():
+        error = "No favorite posters found"
+    else:
+        error = None
+    return render(request, 'favorite.html', {'posters': favorite_posters})

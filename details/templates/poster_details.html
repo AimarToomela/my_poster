@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ poster.name }}</title>
+    <style>
+        html {
+            scroll-padding-top: 50px; /* Adds a buffer when scrolling to top */
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding-top: 50px;
+            padding-bottom: 30px;
+        }
+        img {
+            width: 400px;
+            height: 600px;
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+        h1, h2, p {
+            text-align: center;
+            width: 400px;
+        }
+        .back-button, .favorite-button, .top50-button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            margin-bottom: 20px;
+            width: 150px;
+            text-align: center;
+        }
+        .back-button:hover, .favorite-button:hover, .top50-button:hover {
+            background-color: #0056b3;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        form {
+            margin-top: 10px;
+        }
+        label {
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .favorite-message {
+            color: limegreen;
+            font-weight: bold;
+            font-size: 30px;
+            margin-top: 10px
+        }
+    </style>
+</head>
+<body>
+    <img src="{{ poster.url }}" alt="Poster Image">
+    <h1>{{ poster.name }}</h1>
+    <h2>Directed by: {{ poster.director_name }}</h2>
+    <p>{{ poster.description }}</p>
+
+    {% if is_favorite %}
+        <p class="favorite-message">Already added as favorite</p>
+    {% else %}
+
+    <form method="POST" action="{% url 'add_to_favorites' poster.id %}">
+        {% csrf_token %}
+        <label for="add_to_favorites">Add to favorites</label>
+        <input type="checkbox" name="add_to_favorites" id="add_to_favorites"
+               {% if poster.id in favorite_posters %}checked{% endif %} />
+        <button type="submit">Submit</button>
+    </form>
+    {% endif %}
+
+    <div class="button-container">
+        <button class="back-button" onclick="goBack()">Back</button>
+        <a href="{% url 'favorite' %}">
+            <button class="favorite-button">Favorite</button>
+        </a>
+        <a href="{% url 'top-size' size=50 %}">
+            <button class="top50-button">Top 50</button>
+        </a>
+    </div>
+
+    <script>
+        function goBack() {
+            history.back();
+        }
+    </script>
+</body>
+</html>

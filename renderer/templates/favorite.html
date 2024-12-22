@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Favorite Poster</title>
+    <title>Your Favorite Posters</title>
     <style>
         body {
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
             height: 100vh;
             margin: 0;
@@ -16,14 +16,50 @@
             width: 400px;
             height: 600px;
             object-fit: cover;
+            margin: 10px 0;
+        }
+        .error {
+            color: red;
+        }
+        .poster-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 10px;
+        }
+        .remove-button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #dc3545;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .remove-button:hover {
+            background-color: #c82333;
         }
     </style>
 </head>
 <body>
-    {% if poster %}
-        <img src="{{ poster.url }}" alt="Favorite Poster">
+    {% if error %}
+        <p class="error">{{ error }}</p>
     {% else %}
-        <p>No poster found.</p>
+        {% for poster in posters %}
+            <a href="{% url 'poster_details' poster.id %}">
+                <img src="{{ poster.url }}" alt="Poster">
+            </a>
+            <form method="POST" action="{% url 'remove_from_favorites' poster.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="remove-button">Remove from Favorites</button>
+                </form>
+            </div>
+        {% empty %}
+            <p>No favorites found.</p>
+        {% endfor %}
     {% endif %}
 </body>
 </html>

@@ -15,13 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from renderer.views import favorite, top
-from details.views import poster_details
+from renderer.views import favorites, top
+from details.views import poster_details, add_to_favorites, remove_from_favorites
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('favorite/', favorite, name='favorite'),
+    path('favorite/', favorites, name='favorite'),
     path('top/', top, name='top'),
     path('top/<int:size>/', top, name='top-size'),
     path('poster_details/<int:id>/', poster_details, name='poster_details'),
+    path('poster_details/<int:poster_id>/add_to_favorites/', add_to_favorites, name='add_to_favorites'),
+    path('poster_details/remove_from_favorites/<int:poster_id>/', remove_from_favorites, name='remove_from_favorites'),
 ]
